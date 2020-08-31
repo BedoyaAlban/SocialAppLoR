@@ -1,58 +1,58 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import withStyles from '@material-ui/core/styles/withStyles';
-import MyButton from '../../util/MyButton';
-import LikeButton from './LikeButton';
-import dayjs from 'dayjs';
-import { Link } from 'react-router-dom';
-import Comments from './Comments';
-import CommentForm from './CommentForm';
+import CircularProgress from "@material-ui/core/CircularProgress";
 // MUI Stuff
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import Grid from "@material-ui/core/Grid";
+import withStyles from "@material-ui/core/styles/withStyles";
+import Typography from "@material-ui/core/Typography";
+import ChatIcon from "@material-ui/icons/Chat";
 // Icons
-import CloseIcon from '@material-ui/icons/Close';
-import UnfoldMore from '@material-ui/icons/UnfoldMore';
-import ChatIcon from '@material-ui/icons/Chat';
+import CloseIcon from "@material-ui/icons/Close";
+import UnfoldMore from "@material-ui/icons/UnfoldMore";
+import dayjs from "dayjs";
+import PropTypes from "prop-types";
+import React, { Component, Fragment } from "react";
 // Redux stuff
-import { connect } from 'react-redux';
-import { getScream, clearErrors } from '../../redux/actions/dataActions';
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { clearErrors, getScream } from "../../redux/actions/dataActions";
+import MyButton from "../../util/MyButton";
+import CommentForm from "./CommentForm";
+import Comments from "./Comments";
+import LikeButton from "./LikeButton";
 
-const styles = (theme) => ({
+const styles = theme => ({
   ...theme.spreadThis,
   gridContainer: {
-    backgroundColor: '#28242A',
-    '& svg': {
-      color: '#D5D2CA'
+    backgroundColor: "#28242A",
+    "& svg": {
+      color: "#D5D2CA"
     }
   },
   invisibleSeparator: {
-    border: 'none',
+    border: "none",
     margin: 4
   },
   profileImage: {
     maxWidth: 200,
     height: 200,
-    borderRadius: '50%',
-    objectFit: 'cover'
+    borderRadius: "50%",
+    objectFit: "cover"
   },
   dialogContent: {
     padding: 20
   },
   closeButton: {
-    position: 'absolute',
-    left: '90%',
-    color: '#D5D2CA'
+    position: "absolute",
+    left: "90%",
+    color: "#D5D2CA"
   },
   expandButton: {
-    position: 'absolute',
-    left: '90%'
+    position: "absolute",
+    left: "90%"
   },
   spinnerDiv: {
-    textAlign: 'center',
+    textAlign: "center",
     marginTop: 50,
     marginBottom: 50
   }
@@ -61,8 +61,8 @@ const styles = (theme) => ({
 class ScreamDialog extends Component {
   state = {
     open: false,
-    oldPath: '',
-    newPath: ''
+    oldPath: "",
+    newPath: ""
   };
   componentDidMount() {
     if (this.props.openDialog) {
@@ -106,7 +106,11 @@ class ScreamDialog extends Component {
 
     const dialogMarkup = loading ? (
       <div className={classes.spinnerDiv}>
-        <CircularProgress size={200} thickness={2} style={{ color: '#D5D2CA' }}/>
+        <CircularProgress
+          size={200}
+          thickness={2}
+          style={{ color: "#D5D2CA" }}
+        />
       </div>
     ) : (
       <Grid container spacing={10} className={classes.gridContainer}>
@@ -124,19 +128,57 @@ class ScreamDialog extends Component {
           </Typography>
           <hr className={classes.invisibleSeparator} />
           <Typography variant="body2" className={classes.lightColor}>
-            {dayjs(createdAt).format('h:mm a, MMMM DD YYYY')}
+            {dayjs(createdAt).format("h:mm a, MMMM DD YYYY")}
           </Typography>
           <hr className={classes.invisibleSeparator} />
-          {
-            ((userHandle === "Yasuo") && (<Typography variant="body1" className={classes.locationIonia}>{body}</Typography>))
-            || ((userHandle === "Braum") && (<Typography variant="body1" className={classes.locationFreljord}>{body}</Typography>))
-            || ((userHandle === "MissFortune") && (<Typography variant="body1" className={classes.locationBilgewater}>{body}</Typography>))
-            || ((userHandle === "Jinx") && (<Typography variant="body1" className={classes.locationPiltoverAndZaun}>{body}</Typography>))
-            || ((userHandle === "Darius") && (<Typography variant="body1" className={classes.locationNoxus}>{body}</Typography>))
-            || ((userHandle === "Lux") && (<Typography variant="body1" className={classes.locationDemacia}>{body}</Typography>))
-            || ((userHandle === "Thresh") && (<Typography variant="body1" className={classes.locationShadowIlses}>{body}</Typography>))
-            || (<Typography variant="body1" className={classes.bodyCard}>{body}</Typography>)
-          }
+          {(userHandle === "Yasuo" && (
+            <Typography variant="body1" className={classes.locationIonia}>
+              {body}
+            </Typography>
+          )) ||
+            (userHandle === "Braum" && (
+              <Typography variant="body1" className={classes.locationFreljord}>
+                {body}
+              </Typography>
+            )) ||
+            (userHandle === "MissFortune" && (
+              <Typography
+                variant="body1"
+                className={classes.locationBilgewater}
+              >
+                {body}
+              </Typography>
+            )) ||
+            (userHandle === "Jinx" && (
+              <Typography
+                variant="body1"
+                className={classes.locationPiltoverAndZaun}
+              >
+                {body}
+              </Typography>
+            )) ||
+            (userHandle === "Darius" && (
+              <Typography variant="body1" className={classes.locationNoxus}>
+                {body}
+              </Typography>
+            )) ||
+            (userHandle === "Lux" && (
+              <Typography variant="body1" className={classes.locationDemacia}>
+                {body}
+              </Typography>
+            )) ||
+            (userHandle === "Thresh" && (
+              <Typography
+                variant="body1"
+                className={classes.locationShadowIlses}
+              >
+                {body}
+              </Typography>
+            )) || (
+              <Typography variant="body1" className={classes.bodyCard}>
+                {body}
+              </Typography>
+            )}
           <LikeButton screamId={screamId} />
           <span className={classes.likeCard}>{likeCount} likes</span>
           <MyButton tip="comments">
@@ -189,7 +231,7 @@ ScreamDialog.propTypes = {
   UI: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   scream: state.data.scream,
   UI: state.UI
 });
